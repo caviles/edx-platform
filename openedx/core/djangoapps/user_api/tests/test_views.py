@@ -1021,12 +1021,9 @@ class RegistrationViewTest(ThirdPartyAuthTestMixin, UserAPITestCase):
                 }
             )
 
-
-    def test_register_platform_name(self):
+    def test_register_form_platform_name(self):
         pname = configuration_tags.platform_name()
         self.assertEqual(pname, settings.PLATFORM_NAME)
-
-
 
     def test_register_form_level_of_education(self):
         self._assert_reg_field(
