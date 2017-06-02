@@ -35,7 +35,7 @@ define([
 ) {
     'use strict';
 
-    describe('Search', function() {
+    describe('Course Search', function() {
         beforeEach(function() {
             PageHelpers.preventBackboneChangingUrl();
         });
