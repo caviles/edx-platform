@@ -330,7 +330,7 @@ define([
 
             describe('SearchForm', function() {
                 beforeEach(function() {
-                    loadFixtures('course_search/fixtures/course_search_form.html');
+                    loadFixtures('course_search/fixtures/course_content_page.html');
                     this.form = new SearchForm({
                         el: '#courseware-search-bar'
                     });
@@ -450,13 +450,6 @@ define([
                     }
                 });
 
-                appendSetFixtures(
-                    '<div class="courseware-results"></div>' +
-                    '<section id="course-content"></section>' +
-                    '<section id="dashboard-search-results"></section>' +
-                    '<section id="my-courses" tabindex="-1"></section>'
-                );
-
                 this.collection = new MockCollection();
                 this.resultsView = new SearchResultsView({collection: this.collection});
             }
@@ -465,6 +458,7 @@ define([
                 beforeEach(function() {
                     beforeEachHelper.call(this, CourseSearchResultsView);
                     this.contentElementDisplayValue = 'table-cell';
+                    loadFixtures('course_search/fixtures/course_content_page.html');
                 });
                 it('shows loading message', showsLoadingMessage);
                 it('shows error message', showsErrorMessage);
@@ -480,6 +474,7 @@ define([
                 beforeEach(function() {
                     beforeEachHelper.call(this, DashSearchResultsView);
                     this.contentElementDisplayValue = 'block';
+                    loadFixtures('course_search/fixtures/dashboard_search_page.html');
                 });
                 it('shows loading message', showsLoadingMessage);
                 it('shows error message', showsErrorMessage);
@@ -507,7 +502,9 @@ define([
             function showsLoadingMessage() {
                 $('.search-field').val('search string');
                 $('.search-button').trigger('click');
-                expect(this.$contentElement).toBeHidden();
+                if (this.$contentElement) {
+                    expect(this.$contentElement).toBeHidden();
+                }
                 expect(this.$searchResults).toBeVisible();
                 expect(this.$searchResults).not.toBeEmpty();
             }
@@ -608,19 +605,15 @@ define([
             describe('CourseSearchApp', function() {
                 beforeEach(function() {
                     var courseId = 'a/b/c';
-                    loadFixtures('course_search/fixtures/course_search_form.html');
-                    appendSetFixtures(
-                        '<div class="courseware-results"></div>' +
-                        '<section id="course-content"></section>'
-                    );
+                    loadFixtures('course_search/fixtures/course_content_page.html');
                     CourseSearchFactory({
                         courseId: courseId,
-                        searchForm: $('.search-form')
+                        searchHeader: $('.page-header-search')
                     });
                     spyOn(Backbone.history, 'navigate');
                     this.$contentElement = $('#course-content');
                     this.contentElementDisplayValue = 'table-cell';
-                    this.$searchResults = $('.courseware-results');
+                    this.$searchResults = $('.search-results');
                 });
 
                 afterEach(function() {
@@ -637,9 +630,9 @@ define([
                 it('navigates to search', navigatesToSearch);
             });
 
-            describe('DashSearchApp', function() {
+            describe('DashboardSearchApp', function() {
                 beforeEach(function() {
-                    loadFixtures('course_search/fixtures/dashboard_search_form.html');
+                    loadFixtures('course_search/fixtures/dashboard_search_page.html');
                     appendSetFixtures(
                         '<section id="dashboard-search-results"></section>' +
                         '<section id="my-courses" tabindex="-1"></section>'
@@ -687,6 +680,30 @@ define([
                     expect(this.$searchResults).toBeHidden();
                     expect(this.$searchResults).toBeEmpty();
                 });
+            });
+
+            describe('Course Search Results Page', function() {
+                beforeEach(function() {
+                    var courseId = 'a/b/c';
+                    loadFixtures('course_search/fixtures/course_search_results_page.html');
+                    CourseSearchFactory({
+                        courseId: courseId,
+                        searchHeader: $('.page-header-search')
+                    });
+                    spyOn(Backbone.history, 'navigate');
+                    this.$contentElement = null;  // The search results page does not show over a content element
+                    this.contentElementDisplayValue = 'table-cell';
+                    this.$searchResults = $('.search-results');
+                });
+
+                afterEach(function() {
+                    Backbone.history.stop();
+                });
+
+                it('shows loading message on search', showsLoadingMessage);
+                it('performs search', performsSearch);
+                it('shows an error message', showsErrorMessage);
+                it('loads next page', loadsNextPage);
             });
         });
     });

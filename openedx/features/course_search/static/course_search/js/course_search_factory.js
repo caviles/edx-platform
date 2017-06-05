@@ -11,7 +11,7 @@
                 var requestedQuery = options.query;
                 var router = new SearchRouter();
                 var form = new CourseSearchForm({
-                    el: options.searchForm
+                    el: options.searchHeader
                 });
                 var collection = new SearchCollection([], {courseId: courseId});
                 var results = new CourseSearchResultsView({collection: collection});
@@ -51,7 +51,6 @@
 
                 // Perform a search if an initial query has been provided.
                 if (requestedQuery) {
-                    debugger;
                     router.trigger('search', requestedQuery);
                 }
             };

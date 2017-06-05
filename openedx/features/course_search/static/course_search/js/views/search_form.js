@@ -6,13 +6,12 @@
 
             el: '',
             events: {
-                'submit form': 'submitForm',
+                'submit .search-form': 'submitForm',
                 'click .cancel-button': 'clearSearch'
             },
 
             initialize: function() {
                 this.$searchField = this.$el.find('.search-field');
-                this.$searchButton = this.$el.find('.search-button');
                 this.$cancelButton = this.$el.find('.cancel-button');
             },
 
@@ -48,14 +47,10 @@
             },
 
             setActiveStyle: function() {
-                this.$searchField.addClass('is-active');
-                this.$searchButton.hide();
                 this.$cancelButton.show();
             },
 
             setInitialStyle: function() {
-                this.$searchField.removeClass('is-active');
-                this.$searchButton.show();
                 this.$cancelButton.hide();
             }
 
