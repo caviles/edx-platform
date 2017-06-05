@@ -1320,12 +1320,12 @@ RECALCULATE_GRADES_ROUTING_KEY = LOW_PRIORITY_QUEUE
 
 VIDEO_IMAGE_DEFAULT_FILENAME = 'images/video-images/default_video_image.png'
 VIDEO_IMAGE_SUPPORTED_FILE_FORMATS = {
-    '.png': 'image/png',
-    '.gif': 'image/gif',
     '.bmp': 'image/bmp',
     '.bmp2': 'image/x-ms-bmp',   # PIL gives x-ms-bmp format
+    '.gif': 'image/gif',
     '.jpg': 'image/jpeg',
     '.jpeg': 'image/jpeg',
+    '.png': 'image/png'
 }
 VIDEO_IMAGE_MAX_FILE_SIZE_MB = '2 MB'
 VIDEO_IMAGE_MIN_FILE_SIZE_KB = '2 KB'
