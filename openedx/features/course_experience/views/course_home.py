@@ -20,6 +20,7 @@ from ..utils import get_course_outline_block_tree
 from .course_dates import CourseDatesFragmentView
 from .course_outline import CourseOutlineFragmentView
 from .welcome_message import WelcomeMessageFragmentView
+from .course_sock import CourseSockFragmentView
 
 
 class CourseHomeView(CourseTabView):
@@ -99,6 +100,9 @@ class CourseHomeFragmentView(EdxFragmentView):
             request, course_id=course_id, **kwargs
         )
 
+        # Render the verification sock as a fragment
+        course_sock_fragment = CourseSockFragmentView().render_to_fragment(request, course_id=course_id, **kwargs)
+
         # Render the course dates as a fragment
         dates_fragment = CourseDatesFragmentView().render_to_fragment(request, course_id=course_id, **kwargs)
 
@@ -120,6 +124,7 @@ class CourseHomeFragmentView(EdxFragmentView):
             'resume_course_url': resume_course_url,
             'dates_fragment': dates_fragment,
             'welcome_message_fragment': welcome_message_fragment,
+            'course_sock_fragment': course_sock_fragment,
             'disable_courseware_js': True,
             'uses_pattern_library': True,
         }
