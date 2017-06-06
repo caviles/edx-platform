@@ -42,7 +42,11 @@ from django.utils.http import urlquote_plus
 <main id="main" aria-label="Content" tabindex="-1">
     <div class="container">
         <div class="profile-wrapper">
+          % if getattr(course, 'language'):
+            <section class="course-info" id="course-info-progress" lang="${course.language}">
+          % else:
             <section class="course-info" id="course-info-progress">
+          % endif
                 % if staff_access and studio_url is not None:
                 <div class="wrap-instructor-info">
                     <a class="instructor-info-action studio-view" href="${studio_url}">${_("View Grading in studio")}</a>
