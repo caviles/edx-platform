@@ -245,3 +245,7 @@ class CourseSearchResultsPage(CoursePage):
     def __init__(self, browser, course_id):
         super(CourseSearchResultsPage, self).__init__(browser, course_id)
         self.course_id = course_id
+
+    @property
+    def search_results(self):
+        return self.q(css='.search-results-item')
