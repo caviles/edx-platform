@@ -608,7 +608,7 @@ define([
                     loadFixtures('course_search/fixtures/course_content_page.html');
                     CourseSearchFactory({
                         courseId: courseId,
-                        searchHeader: $('.page-header-search')
+                        searchHeader: $('.search-bar')
                     });
                     spyOn(Backbone.history, 'navigate');
                     this.$contentElement = $('#course-content');
@@ -633,10 +633,6 @@ define([
             describe('DashboardSearchApp', function() {
                 beforeEach(function() {
                     loadFixtures('course_search/fixtures/dashboard_search_page.html');
-                    appendSetFixtures(
-                        '<section id="dashboard-search-results"></section>' +
-                        '<section id="my-courses" tabindex="-1"></section>'
-                    );
                     DashboardSearchFactory();
 
                     spyOn(Backbone.history, 'navigate');
