@@ -190,6 +190,11 @@ def validate_video_image(image_file):
             error = _('This image file must have an aspect ratio of {video_image_aspect_ratio_text}.').format(
                 video_image_aspect_ratio_text=settings.VIDEO_IMAGE_ASPECT_RATIO_TEXT
             )
+        elif image_file_width < settings.VIDEO_IMAGE_MIN_WIDTH or image_file_height < settings.VIDEO_IMAGE_MIN_HEIGHT:
+            error = _('The minimum allowed image resolution is {image_file_min_width}x{image_file_min_height}.').format(
+                image_file_min_width=settings.VIDEO_IMAGE_MIN_WIDTH,
+                image_file_min_height=settings.VIDEO_IMAGE_MIN_HEIGHT
+            )
         else:
             try:
                 image_file.name.encode('ascii')

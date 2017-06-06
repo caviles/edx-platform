@@ -616,7 +616,7 @@ class VideoImageTestCase(VideoUploadTestBase, CourseTestCase):
         """
         Test that when corrupt file is provided to validate_video_image, it gives proper error message.
         """
-        with open(MEDIA_ROOT + '/test-corrupt-image.png', 'w+') as file:
+        with open(settings.MEDIA_ROOT + '/test-corrupt-image.png', 'w+') as file:
             image_file = UploadedFile(
                 file,
                 content_type='image/png',
@@ -714,36 +714,29 @@ class VideoImageTestCase(VideoUploadTestBase, CourseTestCase):
         # Image file resolution validation
         (
             {
-                'width': 16,  # 16x9
-                'height': 9,
-            },
-            None
-        ),
-        (
-            {
                 'width': settings.VIDEO_IMAGE_MAX_WIDTH,  # 1280x720
-                'height': settings.VIDEO_IMAGE_MAX_HEIGHT,
+                'height': settings.VIDEO_IMAGE_MAX_HEIGHT
             },
             None
         ),
         (
             {
                 'width': 850,  # 16:9
-                'height': 478,
+                'height': 478
             },
             None
         ),
         (
             {
                 'width': 940,  # 1.67 ratio, applicable aspect ratio margin of .01
-                'height': 560,
+                'height': 560
             },
             None
         ),
         (
             {
                 'width': 1200,  # not 16:9
-                'height': 100,
+                'height': 100
             },
             'This image file must have an aspect ratio of {video_image_aspect_ratio_text}.'.format(
                 video_image_aspect_ratio_text=settings.VIDEO_IMAGE_ASPECT_RATIO_TEXT
@@ -752,19 +745,50 @@ class VideoImageTestCase(VideoUploadTestBase, CourseTestCase):
         (
             {
                 'width': settings.VIDEO_IMAGE_MIN_WIDTH + 100,
-                'height': settings.VIDEO_IMAGE_MIN_HEIGHT + 200,
+                'height': settings.VIDEO_IMAGE_MIN_HEIGHT + 200
             },
             'This image file must have an aspect ratio of {video_image_aspect_ratio_text}.'.format(
                 video_image_aspect_ratio_text=settings.VIDEO_IMAGE_ASPECT_RATIO_TEXT
             )
         ),
+        # Image file minimum width / height
+        (
+            {
+                'width': 16,  # 16x9
+                'height': 9
+            },
+            'The minimum allowed image resolution is {image_file_min_width}x{image_file_min_height}.'.format(
+                image_file_min_width=settings.VIDEO_IMAGE_MIN_WIDTH,
+                image_file_min_height=settings.VIDEO_IMAGE_MIN_HEIGHT
+            )
+        ),
+        (
+            {
+                'width': settings.VIDEO_IMAGE_MIN_WIDTH - 10,
+                'height': settings.VIDEO_IMAGE_MIN_HEIGHT
+            },
+            'The minimum allowed image resolution is {image_file_min_width}x{image_file_min_height}.'.format(
+                image_file_min_width=settings.VIDEO_IMAGE_MIN_WIDTH,
+                image_file_min_height=settings.VIDEO_IMAGE_MIN_HEIGHT
+            )
+        ),
+        (
+            {
+                'width': settings.VIDEO_IMAGE_MIN_WIDTH,
+                'height': settings.VIDEO_IMAGE_MIN_HEIGHT - 10
+            },
+            'The minimum allowed image resolution is {image_file_min_width}x{image_file_min_height}.'.format(
+                image_file_min_width=settings.VIDEO_IMAGE_MIN_WIDTH,
+                image_file_min_height=settings.VIDEO_IMAGE_MIN_HEIGHT
+            )
+        ),
         # Image file name validation
         (
             {
-                'prefix': u'nøn-åßç¡¡',
+                'prefix': u'nøn-åßç¡¡'
             },
             'The image file name can only contain letters, numbers, hyphens (-), and underscores (_).'
-        ),
+        )
     )
     @ddt.unpack
     def test_video_image_validation_message(self, image_data, error_message):
