@@ -10,9 +10,11 @@
                 'click .cancel-button': 'clearSearch'
             },
 
-            initialize: function() {
+            initialize: function(options) {
                 this.$searchField = this.$el.find('.search-field');
+                this.$searchButton = this.$el.find('.search-button');
                 this.$cancelButton = this.$el.find('.cancel-button');
+                this.supportsActive = options.supportsActive === undefined ? true : options.supportsActive;
             },
 
             submitForm: function(event) {
@@ -21,16 +23,16 @@
             },
 
             doSearch: function(term) {
-                var trimmed;
+                var trimmedTerm;
                 if (term) {
-                    trimmed = term.trim();
-                    this.$searchField.val(trimmed);
+                    trimmedTerm = term.trim();
+                    this.$searchField.val(trimmedTerm);
                 } else {
-                    trimmed = this.$searchField.val().trim();
+                    trimmedTerm = this.$searchField.val().trim();
                 }
-                if (trimmed) {
+                if (trimmedTerm) {
                     this.setActiveStyle();
-                    this.trigger('search', trimmed);
+                    this.trigger('search', trimmedTerm);
                 } else {
                     this.clearSearch();
                 }
@@ -47,13 +49,20 @@
             },
 
             setActiveStyle: function() {
-                this.$cancelButton.show();
+                if (this.supportsActive) {
+                    this.$searchField.addClass('is-active');
+                    this.$searchButton.hide();
+                    this.$cancelButton.show();
+                }
             },
 
             setInitialStyle: function() {
-                this.$cancelButton.hide();
+                if (this.supportsActive) {
+                    this.$searchField.removeClass('is-active');
+                    this.$searchButton.show();
+                    this.$cancelButton.hide();
+                }
             }
-
         });
     });
 }(define || RequireJS.define));

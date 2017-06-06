@@ -9,9 +9,11 @@
             return function(options) {
                 var courseId = options.courseId;
                 var requestedQuery = options.query;
+                var supportsActive = options.supportsActive;
                 var router = new SearchRouter();
                 var form = new CourseSearchForm({
-                    el: options.searchHeader
+                    el: options.searchHeader,
+                    supportsActive: supportsActive
                 });
                 var collection = new SearchCollection([], {courseId: courseId});
                 var results = new CourseSearchResultsView({collection: collection});

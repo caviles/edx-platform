@@ -332,7 +332,7 @@ define([
                 beforeEach(function() {
                     loadFixtures('course_search/fixtures/course_content_page.html');
                     this.form = new SearchForm({
-                        el: '#courseware-search-bar'
+                        el: '.search-bar'
                     });
                     this.onClear = jasmine.createSpy('onClear');
                     this.onSearch = jasmine.createSpy('onSearch');

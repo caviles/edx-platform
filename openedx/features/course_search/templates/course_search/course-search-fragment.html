@@ -63,6 +63,7 @@ from openedx.core.djangolib.markup import HTML
     CourseSearchFactory({
         courseId: courseId,
         searchHeader: $('.page-header-search'),
+        supportsActive: false,
         query: '${query | n, js_escaped_string}'
     });
 </%static:require_module>
