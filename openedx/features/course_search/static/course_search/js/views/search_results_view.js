@@ -24,7 +24,7 @@
             spinner: '.search-load-next .icon',
 
             initialize: function() {
-                this.$contentElement = $(this.contentElement);
+                this.$contentElement = this.contentElement ? $(this.contentElement) : $([]);
             },
 
             render: function() {

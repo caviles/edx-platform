@@ -456,9 +456,9 @@ define([
 
             describe('CourseSearchResultsView', function() {
                 beforeEach(function() {
+                    loadFixtures('course_search/fixtures/course_content_page.html');
                     beforeEachHelper.call(this, CourseSearchResultsView);
                     this.contentElementDisplayValue = 'table-cell';
-                    loadFixtures('course_search/fixtures/course_content_page.html');
                 });
                 it('shows loading message', showsLoadingMessage);
                 it('shows error message', showsErrorMessage);
@@ -472,9 +472,9 @@ define([
 
             describe('DashSearchResultsView', function() {
                 beforeEach(function() {
+                    loadFixtures('course_search/fixtures/dashboard_search_page.html');
                     beforeEachHelper.call(this, DashSearchResultsView);
                     this.contentElementDisplayValue = 'block';
-                    loadFixtures('course_search/fixtures/dashboard_search_page.html');
                 });
                 it('shows loading message', showsLoadingMessage);
                 it('shows error message', showsErrorMessage);
