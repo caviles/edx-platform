@@ -49,7 +49,7 @@ class CourseHomePage(CoursePage):
     def search_for_term(self, search_term):
         """ Search within a class for a particular term"""
         self.q(css='.search-form > .search-input').fill(search_term)
-        self.q(css='.search-form > .search-btn').click()
+        self.q(css='.search-form > .search-button').click()
 
 
 class CourseOutlinePage(PageObject):
