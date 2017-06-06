@@ -101,7 +101,7 @@ class CourseOverview(TimeStampedModel):
     marketing_url = TextField(null=True)
     eligible_for_financial_aid = BooleanField(default=True)
 
-    language = TextField(default=None)
+    language = TextField(null=True)
 
     @classmethod
     def _create_or_update(cls, course):

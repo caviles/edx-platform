@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='courseoverview',
             name='language',
-            field=models.TextField(default=None),
+            field=models.TextField(null=True),
         ),
     ]
